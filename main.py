@@ -26,6 +26,11 @@ app.add_middleware(
 # Folder uploads
 os.makedirs("uploads", exist_ok=True)
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+# Serve frontend files
+import shutil
+frontend_path = "../frontend"
+if os.path.exists(frontend_path):
+    app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
 
 # Simpan koneksi WebSocket aktif
 active_connections: Dict[str, WebSocket] = {}
