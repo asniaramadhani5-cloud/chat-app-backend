@@ -13,6 +13,14 @@ from auth import register_user, login_user, verify_token, admin_action, get_all_
 from encryption import encrypt_message, decrypt_message
 
 app = FastAPI(title="Chat App")
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/")
+async def serve_index():
+    return FileResponse("static/index.html")
 
 # CORS
 app.add_middleware(
